@@ -15,7 +15,7 @@
 
   <div class="next" v-if="!hasEnded">
     <template v-if="isLoading">
-      Loading...
+      <loading />
     </template>
 
     <template v-else>
@@ -30,52 +30,41 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import List from '@/components/list/list.vue';
-import ListItem from '@/components/list/list-item.vue';
-import pkButton from '@/components/button.vue';
-import PokeApi from '@/api/PokeApi';
+import List from '@/components/List/List.vue';
+import ListItem from '@/components/List/List-Item.vue';
+import pkButton from '@/components/Button.vue';
+import { useStore } from 'vuex';
+import Loading from '@/components/Loading.vue';
 
 @Options({
   components: {
+    Loading,
     List,
     ListItem,
     pkButton,
   },
 })
 export default class HomeView extends Vue {
-  offset: number = 0;
+  private readonly store = useStore();
 
-  count: number = 0;
-
-  pokemonList: string[] = [];
-
-  isLoading: boolean = false
-
-  hasEnded: boolean = false
-
-  mounted() {
-    this.requestPokemonList()
-      .catch(console.error);
+  get pokemonList(): string[] {
+    return this.store.getters.GET_POKEMON_LIST;
   }
 
-  async requestPokemonList() {
-    if (this.isLoading) return;
-    this.isLoading = true;
+  get isLoading(): string[] {
+    return this.store.getters.GET_IS_LOADING;
+  }
 
-    try {
-      if (this.count !== 0 && this.count === this.offset) this.hasEnded = true;
+  get hasEnded(): string[] {
+    return this.store.getters.GET_HAS_ENDED;
+  }
 
-      const { data: { results, count } } = await PokeApi.POKEMON_LIST(this.offset, 20);
-      this.pokemonList.push(...results.map((r: Record<string, unknown>) => r.name));
+  mounted() {
+    this.store.dispatch('LOAD_POKEMON_LIST_PAGINATED');
+  }
 
-      this.count = count;
-      this.offset += 20;
-      this.offset = Math.min(this.count, this.offset);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      this.isLoading = false;
-    }
+  requestPokemonList() {
+    this.store.dispatch('LOAD_POKEMON_LIST_PAGINATED');
   }
 
   openCard(pokemon: string) {
