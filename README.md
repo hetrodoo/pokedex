@@ -1,4 +1,9 @@
-# pokedex
+# Pokedex
+
+[pokedex.hetrodo.dev](https://pokedex.hetrodo.dev/)
+
+![pokedex structure](https://user-images.githubusercontent.com/48604350/218263984-f882cd4d-0695-4515-bd60-d3a3acf130f4.png)
+
 
 ## Project setup
 ```
