@@ -20,6 +20,10 @@ jobs:
           paths:
             - "node_modules"
       - run:
+          name: "Test"
+          command: |
+            yarn test:unit
+      - run:
           name: "Build"
           command: |
             yarn build
