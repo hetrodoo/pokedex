@@ -59,7 +59,7 @@ defineProps<{
   width: 350px
   border-radius: 16px
   background-color: #D9D9D9
-  filter: drop-shadow(0 0 16px rgba(0, 0, 0, 0.125))
+  filter: drop-shadow(0 0 16px rgba(0, 0, 0, 0.75))
   text-transform: capitalize
   font-size: 18px
 
