@@ -1,6 +1,6 @@
 <template>
   <h2 style="margin-left: 16px">
-    Pokedex
+    Pokedex <span style="font-size: 12px">v{{version}}</span>
   </h2>
 
   <list>
@@ -25,6 +25,7 @@ import ListItem from '@/components/List/List-Item.vue';
 import pkButton from '@/components/Button.vue';
 import { useStore } from 'vuex';
 import Loading from '@/components/Loading.vue';
+import Package from '../../package.json';
 
 @Options({
   components: {
@@ -36,6 +37,11 @@ import Loading from '@/components/Loading.vue';
 })
 export default class HomeView extends Vue {
   private readonly store = useStore();
+
+  // eslint-disable-next-line class-methods-use-this
+  get version(): string {
+    return Package.version;
+  }
 
   get pokemonList(): string[] {
     return this.store.getters.GET_POKEMON_LIST;
