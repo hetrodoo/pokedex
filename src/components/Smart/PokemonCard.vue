@@ -25,8 +25,12 @@
 
       <div class="section">
         <div class="section-content">
-          <span>static</span>
-          <span>lightning-rod</span>
+          <span
+            v-for="(ability, index) in abilities"
+            :key="index"
+          >
+            {{ ability }}
+          </span>
         </div>
       </div>
 
@@ -44,6 +48,7 @@ defineProps<{
   image: string,
   name: string,
   types: string[],
+  abilities: string[],
   stats: IPokemonStats,
 }>();
 </script>
