@@ -7,5 +7,5 @@ const pokeApi = setupCache(axios.create({
 
 export default {
   POKEMON_LIST: (offset: number, limit: number) => pokeApi.get('api/v2/pokemon', { params: { offset, limit } }),
-  POKEMON: (pokemon: string) => pokeApi.get(`api/v2/pokemon/${pokemon}`),
+  POKEMON: <T>(pokemon: string) => pokeApi.get<T>(`api/v2/pokemon/${pokemon}`),
 };
