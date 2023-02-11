@@ -2,6 +2,15 @@
   <router-view/>
 </template>
 
+<script lang="ts" setup>
+import { useStore } from 'vuex';
+import { onMounted } from 'vue';
+
+const store = useStore();
+
+onMounted(() => store.dispatch('LOAD_POKEMON_LIST_PAGINATED'));
+</script>
+
 <style lang="sass">
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap')
 
