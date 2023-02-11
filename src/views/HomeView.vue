@@ -13,18 +13,8 @@
     </list-item>
   </list>
 
-  <div class="next" v-if="!hasEnded">
-    <template v-if="isLoading">
-      <loading />
-    </template>
-
-    <template v-else>
-      <pk-button
-        @click="requestPokemonList"
-      >
-        Ver mais
-      </pk-button>
-    </template>
+  <div class="next" v-if="!hasEnded && isLoading">
+    <loading />
   </div>
 </template>
 
@@ -60,11 +50,17 @@ export default class HomeView extends Vue {
   }
 
   mounted() {
-    this.store.dispatch('LOAD_POKEMON_LIST_PAGINATED');
+    window.addEventListener('scroll', this.loadIfAtBottom);
   }
 
-  requestPokemonList() {
-    this.store.dispatch('LOAD_POKEMON_LIST_PAGINATED');
+  unmounted() {
+    window.removeEventListener('scroll', this.loadIfAtBottom);
+  }
+
+  loadIfAtBottom() {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      this.store.dispatch('LOAD_POKEMON_LIST_PAGINATED');
+    }
   }
 
   openCard(pokemon: string) {
